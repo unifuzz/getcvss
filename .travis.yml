@@ -10,9 +10,9 @@ python:
   - '3.8'
 
 install:
-  - mkdir -p /data
+  - mkdir -p /tmp/cvssdata
   - python run.py
 
 cache:
   directories:
-    - /data
+    - /tmp/cvssdata

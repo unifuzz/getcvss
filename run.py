@@ -46,4 +46,4 @@ def writetofile(filepath, data):
 if __name__ == "__main__":
     #print(getdata("recent"))
     data = fullupdate()
-    writetofile("/data/data.csv", data)
+    writetofile("/tmp/cvssdata/data.csv", data)
