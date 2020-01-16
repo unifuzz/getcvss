@@ -1,0 +1,18 @@
+version: ~> 1.0
+
+language: python
+
+env:
+  global:
+    - PYTHONIOENCODING: utf8
+
+python:
+  - '3.8'
+
+install:
+  - mkdir -p /data
+  - python run.py
+
+cache:
+  directories:
+    - /data
