@@ -3,8 +3,10 @@ sess = requests.session()
 import gzip
 import json
 import time
+import os
 
 def downloadyear(year):
+    print("fetching year", year)
     url = "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-{year}.json.gz".format(year=year)
     req = sess.get(url, stream=True)
     return gzip.open(req.raw).read().decode()
@@ -45,5 +47,6 @@ def writetofile(filepath, data):
 
 if __name__ == "__main__":
     #print(getdata("recent"))
-    data = fullupdate()
-    writetofile("/tmp/cvssdata/data.csv", data)
+    print(os.path.getmtime("/tmp/cvssdata/data.csv"), time.time()-os.path.getmtime("/tmp/cvssdata/data.csv"))
+    #data = fullupdate()
+    #writetofile("/tmp/cvssdata/data.csv", data)
