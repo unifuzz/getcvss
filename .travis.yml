@@ -15,7 +15,10 @@ before_install:
 install:
   - mkdir -p /tmp/cvssdata
 
-script: python run.py
+script: 
+  - python run.py
+  - zip /tmp/cvss.csv.zip /tmp/cvssdata/data.csv
+  - curl https://v0.api.upyun.com/py3iodownload -F file=@/tmp/cvss.csv.zip -F policy=$UPYUN_POLICY -F signature=$UPYUN_SIGN
 
 cache:
   directories:

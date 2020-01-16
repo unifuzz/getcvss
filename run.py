@@ -12,14 +12,14 @@ def downloadyear(year):
     return gzip.open(req.raw).read().decode()
 
 def getdata(year):
-    # {"id": ["CWE1,CWE2", "CVSSV3 score", "CVSSV2 score", "vector V3", "vector V2"]}
-    # example: "CVE-2011-1474": ["CWE-400,CWE-835", 5.5, 4.9, "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H", "AV:L/AC:L/Au:N/C:N/I:N/A:C"]
+    # {"id": ["CWE1/CWE2", "CVSSV3 score", "CVSSV2 score", "vector V3", "vector V2"]}
+    # example: "CVE-2011-1474": ["CWE-400/CWE-835", 5.5, 4.9, "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H", "AV:L/AC:L/Au:N/C:N/I:N/A:C"]
     data = json.loads(downloadyear(year))
     res = {}
     for item in data["CVE_Items"]:
         id = item["cve"]["CVE_data_meta"]["ID"]
         cwes = [i["value"] for i in item["cve"]["problemtype"]["problemtype_data"][0]["description"]]
-        cwe = ",".join(cwes)
+        cwe = "/".join(cwes)
         try:
             cvssv3_score, vector_v3 = item["impact"]["baseMetricV3"]["cvssV3"]["baseScore"], item["impact"]["baseMetricV3"]["cvssV3"]["vectorString"]
         except:
@@ -45,8 +45,16 @@ def writetofile(filepath, data):
         for id, (cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2) in d:
             fp.write(",".join([str(i) for i in [id, cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2]])+"\n")
 
+def readfromfile(filepath):
+    data = {}
+    for _line in open(filepath):
+        id, cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2 = _line.strip().split(",")
+        data[id] = [cwe, float(cvssv3_score), float(cvssv2_score), vector_v3, vector_v2]
+    return data
+
 if __name__ == "__main__":
     #print(getdata("recent"))
-    print(os.path.getmtime("/tmp/cvssdata/data.csv"), time.time()-os.path.getmtime("/tmp/cvssdata/data.csv"))
-    #data = fullupdate()
-    #writetofile("/tmp/cvssdata/data.csv", data)
+    #print(os.path.getmtime("/tmp/cvssdata/data.csv"), time.time()-os.path.getmtime("/tmp/cvssdata/data.csv"))
+    data = fullupdate()
+    writetofile("/tmp/cvssdata/data.csv", data)
+    # TODO: add meta data comparation to avoid full update
