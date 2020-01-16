@@ -14,7 +14,8 @@ before_install:
 
 install:
   - mkdir -p /tmp/cvssdata
-  - python run.py
+
+script: python run.py
 
 cache:
   directories:
