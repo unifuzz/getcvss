@@ -54,7 +54,7 @@ def readfromfile(filepath):
 
 if __name__ == "__main__":
     #print(getdata("recent"))
-    #print(os.path.getmtime("/tmp/cvssdata/data.csv"), time.time()-os.path.getmtime("/tmp/cvssdata/data.csv"))
+    #print(os.path.getmtime("/tmp/cvssdata/cvss.csv"), time.time()-os.path.getmtime("/tmp/cvssdata/cvss.csv"))
     data = fullupdate()
-    writetofile("/tmp/cvssdata/data.csv", data)
+    writetofile("/tmp/cvssdata/cvss.csv", data)
     # TODO: add meta data comparation to avoid full update
