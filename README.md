@@ -1,7 +1,7 @@
 # getcvss [![Build Status](https://travis-ci.org/UNIFUZZ/getcvss.svg?branch=master)](https://travis-ci.org/UNIFUZZ/getcvss)
 Get CVSS data from NVD data feed.
 
-Use travis-ci to auto trigger update per day.
+Use [travis-ci](https://travis-ci.org/UNIFUZZ/getcvss) to auto trigger update per day.
 
 ## Download
 
@@ -13,7 +13,7 @@ You can download current cvss data here: [https://p.py3.io/cvss.csv.zip](https:/
 
 CWEs are concatenated by '/', example: `CWE-400/CWE-835`
 
-If CVSS score missing, -1 will be placed.
+Missing CVSS scores are denoted by -1.
 
 Sorted by CVE ID ascending order.
 
