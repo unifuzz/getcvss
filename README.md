@@ -7,6 +7,10 @@ Use [travis-ci](https://travis-ci.org/UNIFUZZ/getcvss) to auto trigger update pe
 
 You can download current cvss data here: [https://p.py3.io/cvss.csv.zip](https://p.py3.io/cvss.csv.zip)
 
+```
+wget https://p.py3.io/cvss.csv.zip -qO-| bsdtar -xvf-
+```
+
 ## Format
 
 `CVE ID, CWEs, CVSSv3_score, CVSSv2_score, vector_v3, vector_v2`
