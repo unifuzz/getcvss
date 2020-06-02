@@ -28,7 +28,8 @@ def getdata(year):
             cvssv2_score, vector_v2 = item["impact"]["baseMetricV2"]["cvssV2"]["baseScore"], item["impact"]["baseMetricV2"]["cvssV2"]["vectorString"]
         except:
             cvssv2_score, vector_v2 = -1, ""
-        res[id] = [cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2]
+        date = item["publishedDate"].split("T")[0]
+        res[id] = [cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2, date]
     return res
 
 def fullupdate():
@@ -42,8 +43,8 @@ def fullupdate():
 def writetofile(filepath, data):
     d = sorted(data.items(), key=lambda i:(int(i[0].split("-")[1]),int(i[0].split("-")[2])))
     with open(filepath, "w") as fp:
-        for id, (cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2) in d:
-            fp.write(",".join([str(i) for i in [id, cwe, cvssv3_score, cvssv2_score, vector_v3, vector_v2]])+"\n")
+        for id, itemdata in d:
+            fp.write(",".join([str(i) for i in [id]+itemdata])+"\n")
 
 def readfromfile(filepath):
     data = {}
